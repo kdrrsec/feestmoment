@@ -1,37 +1,30 @@
-# Vercel environment variables (verplicht voor deploy)
+# Vercel deploy — environment variables
 
-De build faalt met **P1012 / DATABASE_URL not found** als deze variabelen ontbreken.
+**Zet deze NOOIT in Git.** Alleen in Vercel → Settings → Environment Variables (Production + Preview).
 
-## Waar instellen
+## Verplicht (4 stuks)
 
-Vercel → jouw project **feestmoment** → **Settings** → **Environment Variables**
-
-Zet elke variabele voor **Production** én **Preview** (vink beide aan).
-
-## Minimaal verplicht
-
-| Name | Value |
+| Name | Waarde |
 |------|--------|
-| `DATABASE_URL` | Kopieer uit je lokale `.env.local` (Neon connection string) |
-| `NEXTAUTH_SECRET` | Kopieer uit `.env.local` |
-| `NEXTAUTH_URL` | `https://feestmoment.vercel.app` (of je echte Vercel-URL) |
+| `DATABASE_URL` | Neon connection string (uit je `.env.local`) |
+| `NEXTAUTH_SECRET` | Uit `.env.local` |
+| `NEXTAUTH_URL` | `https://jouw-project.vercel.app` |
 | `NEXT_PUBLIC_URL` | Zelfde als `NEXTAUTH_URL` |
 
-## Aanbevolen
+## Optioneel
 
-| Name | Value |
+| Name | Waarde |
 |------|--------|
-| `NEXT_PUBLIC_SITE_PHONE` | Jouw telefoonnummer, bv. `+31612345678` |
-| `LEAD_NOTIFICATION_EMAIL` | E-mail voor nieuwe leads |
-| `RESEND_API_KEY` | Optioneel, voor e-mailnotificaties |
+| `NEXT_PUBLIC_SITE_PHONE` | Telefoonnummer |
+| `RESEND_API_KEY` | E-mailnotificaties |
+| `LEAD_NOTIFICATION_EMAIL` | Ontvanger leads |
 
-## Na het toevoegen
+## Na toevoegen
 
-1. **Redeploy** — Deployments → laatste deploy → **Redeploy** (niet alleen cache, gewoon opnieuw deployen).
-2. **Database vullen** (eenmalig, lokaal):
+Deployments → **Redeploy**.
 
-```bash
-npm run db:seed
-```
+Database vullen (eenmalig lokaal): `npm run db:seed`
 
-Admin: `admin@feestmomentverhuur.nl` / `admin123` (wachtwoord wijzigen op productie).
+## Beveiliging
+
+Als credentials ooit in Git stonden: **Neon → Reset password** en gebruik de nieuwe string alleen in Vercel.
