@@ -1,0 +1,289 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Minimalistisch Wit-Zwart-Grijs Palet */
+    --background: 255 255 255; /* #FFFFFF - Wit */
+    --surface: 248 248 248; /* #F8F8F8 - Licht grijs voor secties */
+    --text-primary: 17 17 17; /* #111111 - Bijna zwart */
+    --text-secondary: 102 102 102; /* #666666 - Secundaire tekst */
+    --border: 229 229 229; /* #E5E5E5 - Borders */
+    
+    /* Zeer subtiel goud accent (alleen voor hover/details) */
+    --accent-gold: 198 167 107; /* #C6A76B - Zeer subtiel goud */
+    
+    /* Shadcn/ui compatible tokens */
+    --foreground: var(--text-primary);
+    --card: var(--background);
+    --card-foreground: var(--text-primary);
+    --popover: var(--background);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--text-primary); /* Zwart voor primary buttons */
+    --primary-foreground: 17 17 17; /* Zwart voor primary button text */
+    --secondary: var(--text-secondary);
+    --secondary-foreground: 255 255 255;
+    --muted: var(--surface);
+    --muted-foreground: var(--text-secondary);
+    --accent: var(--accent-gold);
+    --accent-foreground: var(--text-primary);
+    --destructive: 239 68 68; /* #EF4444 - Rood */
+    --destructive-foreground: 255 255 255;
+    --ring: var(--accent-gold);
+    --radius: 12px;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    -webkit-tap-highlight-color: transparent !important;
+    tap-highlight-color: transparent !important;
+  }
+  body {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-tap-highlight-color: transparent !important;
+    tap-highlight-color: transparent !important;
+  }
+  button {
+    color: #111111 !important;
+  }
+  button * {
+    color: #111111 !important;
+  }
+  button svg,
+  button svg * {
+    color: #111111 !important;
+    stroke: #111111 !important;
+    fill: #111111 !important;
+  }
+  svg {
+    color: #111111 !important;
+    stroke: #111111 !important;
+  }
+  svg * {
+    color: #111111 !important;
+    stroke: #111111 !important;
+    fill: #111111 !important;
+  }
+  a {
+    color: #111111 !important;
+  }
+  a * {
+    color: #111111 !important;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: #111111 !important;
+  }
+  p, span, div, li, td, th {
+    color: inherit;
+  }
+  .text-white,
+  [class*="text-white"],
+  [class*="text-white"] * {
+    color: #111111 !important;
+  }
+  html {
+    background-color: #ffffff !important;
+    -webkit-tap-highlight-color: transparent !important;
+    tap-highlight-color: transparent !important;
+  }
+  main {
+    background-color: #ffffff !important;
+  }
+  a {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none;
+    background-color: transparent !important;
+  }
+  a:focus {
+    outline: none !important;
+    background-color: transparent !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  a:focus-visible {
+    outline: none !important;
+    background-color: transparent !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  a:active {
+    outline: none !important;
+    background-color: transparent !important;
+    -webkit-tap-highlight-color: transparent !important;
+    tap-highlight-color: transparent !important;
+  }
+  a:visited {
+    outline: none !important;
+    background-color: transparent !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  a:hover {
+    background-color: transparent !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  button {
+    -webkit-tap-highlight-color: transparent !important;
+    tap-highlight-color: transparent !important;
+  }
+  button:active {
+    -webkit-tap-highlight-color: transparent !important;
+    tap-highlight-color: transparent !important;
+  }
+  button:focus {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  button:focus-visible {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  div, section, article, main, header, footer, nav {
+    -webkit-tap-highlight-color: transparent !important;
+    tap-highlight-color: transparent !important;
+  }
+}
+
+/* Typography Scale */
+@layer base {
+  h1 {
+    @apply text-4xl md:text-5xl font-serif font-bold tracking-tight text-[#111111];
+  }
+  h2 {
+    @apply text-3xl md:text-4xl font-serif font-bold tracking-tight text-[#111111];
+  }
+  h3 {
+    @apply text-2xl md:text-3xl font-serif font-semibold text-[#111111];
+  }
+  h4 {
+    @apply text-xl md:text-2xl font-serif font-semibold text-[#111111];
+  }
+  p {
+    @apply text-base font-sans leading-relaxed text-[#111111];
+  }
+  .text-small {
+    @apply text-sm font-sans;
+  }
+  .text-button {
+    @apply text-sm font-sans font-medium;
+  }
+}
+
+/* Remove all tap highlights and focus outlines globally */
+* {
+  -webkit-tap-highlight-color: transparent !important;
+  tap-highlight-color: transparent !important;
+}
+
+a, button, [role="button"], [tabindex] {
+  -webkit-tap-highlight-color: transparent !important;
+  tap-highlight-color: transparent !important;
+  outline: none !important;
+}
+
+a:focus,
+a:active,
+a:visited,
+a:hover,
+button:focus,
+button:active,
+[role="button"]:focus,
+[role="button"]:active,
+[tabindex]:focus,
+[tabindex]:active {
+  outline: none !important;
+  background-color: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
+  tap-highlight-color: transparent !important;
+}
+
+/* Remove selection highlight on click */
+::selection {
+  background: transparent;
+}
+
+::-moz-selection {
+  background: transparent;
+}
+
+/* Force all text and icons to be black and visible */
+* {
+  --tw-text-opacity: 1 !important;
+}
+
+button,
+button *,
+a,
+a *,
+h1, h2, h3, h4, h5, h6,
+p, span, div, li, label {
+  color: #111111 !important;
+}
+
+svg,
+svg *,
+path,
+circle,
+rect,
+line,
+polyline,
+polygon {
+  color: #111111 !important;
+  stroke: #111111 !important;
+  fill: #111111 !important;
+}
+
+/* Override any white text classes */
+.text-white,
+.text-white\:,
+[class*="text-white"],
+[class*="text-white"] * {
+  color: #111111 !important;
+}
+
+/* Ensure icons in buttons are visible */
+button svg,
+a svg,
+[role="button"] svg {
+  color: #111111 !important;
+  stroke: #111111 !important;
+  fill: #111111 !important;
+}
+
+/* Inline reservation validation (must override global forced black text on div/p) */
+.reservation-inline-error {
+  color: #b91c1c !important;
+  background-color: #fef2f2 !important;
+  border: 1px solid #fecaca !important;
+}
+
+/* Keep WhatsApp reservation button green on click/focus */
+.whatsapp-reserve-btn,
+.whatsapp-reserve-btn:hover,
+.whatsapp-reserve-btn:active,
+.whatsapp-reserve-btn:focus,
+.whatsapp-reserve-btn:focus-visible {
+  background-color: #16a34a !important;
+  color: #ffffff !important;
+}
+
+.whatsapp-reserve-btn svg,
+.whatsapp-reserve-btn svg * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: scale(1.05) translateY(0);
+  }
+  50% {
+    transform: scale(1.08) translateY(-10px);
+  }
+}

@@ -1,0 +1,155 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?   // For admin login (hashed)
+  role          String    @default("ADMIN") // ADMIN, USER
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  description String?
+  image     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  pricePerDay Float
+  deposit     Float    @default(0) // Borg
+  stockQty    Int      @default(1) // Voorraad
+  images      String   @default("[]") // JSON string van image URLs
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orderItems  RentalOrderItem[]
+  reservations Reservation[]
+}
+
+model RentalOrder {
+  id              String            @id @default(cuid())
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+  startDate       DateTime
+  endDate         DateTime
+  deliveryType    String            // "DELIVERY", "PICKUP", "SETUP"
+  deliveryAddress String?
+  deliveryCity    String?
+  deliveryZipCode String?
+  subtotal        Float
+  deliveryFee     Float             @default(0)
+  deposit         Float             @default(0)
+  total           Float
+  status          String            @default("PENDING") // PENDING, PAID, CONFIRMED, COMPLETED, CANCELLED
+  stripeSessionId String?          @unique
+  stripePaymentIntentId String?
+  notes           String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  items           RentalOrderItem[]
+}
+
+model RentalOrderItem {
+  id        String      @id @default(cuid())
+  orderId   String
+  order     RentalOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product     @relation(fields: [productId], references: [id])
+  quantity  Int
+  unitPrice Float
+  lineTotal Float
+  createdAt DateTime    @default(now())
+}
+
+model Reservation {
+  id             String   @id @default(cuid())
+  productId      String
+  product        Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderId        String? // Koppeling aan betaalde order indien van toepassing
+  startDate      DateTime
+  endDate        DateTime
+  quantity       Int      @default(1)
+  source         String   @default("WHATSAPP") // WHATSAPP (site), ADMIN (handmatig), ORDER
+  customerName   String?
+  customerPhone  String?
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  @@index([productId, startDate, endDate])
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  eventDate DateTime?
+  message   String?
+  budget    String?
+  status    String   @default("NEW") // NEW, CONTACTED, QUOTED, CONVERTED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
