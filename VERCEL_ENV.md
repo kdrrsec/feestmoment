@@ -1,30 +1,35 @@
-# Vercel deploy — environment variables
+# Vercel deploy
 
-**Zet deze NOOIT in Git.** Alleen in Vercel → Settings → Environment Variables (Production + Preview).
+## Snel live (zonder database)
 
-## Verplicht (4 stuks)
+De site kan **zonder** `DATABASE_URL` deployen. Assortiment toont dan **voorbeeldproducten** (demo-modus).
 
-| Name | Waarde |
+Homepage, Over ons, Contact en Offerte werken. Admin en formulieren die data opslaan werken pas met database.
+
+## Database koppelen (aanbevolen)
+
+Vercel heeft geen eigen database — je koppelt **Neon** (gratis):
+
+1. Vercel → project **feestmoment** → **Storage** tab
+2. **Create Database** → kies **Neon**
+3. Volg de stappen — Vercel zet automatisch `DATABASE_URL` (en `POSTGRES_URL`)
+4. **Redeploy**
+
+Daarna lokaal eenmalig: `npm run db:seed` (met productie-URL in `.env.local`).
+
+### Handmatig (alternatief)
+
+Settings → **Environment Variables** → Production + Preview:
+
+| Name | Value |
 |------|--------|
-| `DATABASE_URL` | Neon connection string (uit je `.env.local`) |
-| `NEXTAUTH_SECRET` | Uit `.env.local` |
-| `NEXTAUTH_URL` | `https://jouw-project.vercel.app` |
-| `NEXT_PUBLIC_URL` | Zelfde als `NEXTAUTH_URL` |
+| `DATABASE_URL` | Neon connection string |
+| `NEXTAUTH_SECRET` | Random string |
+| `NEXTAUTH_URL` | `https://jouw-site.vercel.app` |
+| `NEXT_PUBLIC_URL` | Zelfde URL |
 
-## Optioneel
+**Nooit** database-wachtwoorden in Git zetten.
 
-| Name | Waarde |
-|------|--------|
-| `NEXT_PUBLIC_SITE_PHONE` | Telefoonnummer |
-| `RESEND_API_KEY` | E-mailnotificaties |
-| `LEAD_NOTIFICATION_EMAIL` | Ontvanger leads |
+## Admin
 
-## Na toevoegen
-
-Deployments → **Redeploy**.
-
-Database vullen (eenmalig lokaal): `npm run db:seed`
-
-## Beveiliging
-
-Als credentials ooit in Git stonden: **Neon → Reset password** en gebruik de nieuwe string alleen in Vercel.
+`admin@feestmomentverhuur.nl` / `admin123` — alleen na `db:seed` met database.

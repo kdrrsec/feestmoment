@@ -1,94 +1,26 @@
-import { prisma } from "@/lib/prisma"
 import { ProductCard } from "@/components/product-card"
 import { ProductFilters } from "@/components/product-filters"
 import { SearchBar } from "@/components/search-bar"
+import { getAssortiment } from "@/lib/catalog"
 import { Suspense } from "react"
 
 /** Zoek- en filterquery maakt deze route dynamisch (geen statische pre-render). */
 export const dynamic = "force-dynamic"
 
 async function getProducts(searchParams: { [key: string]: string | string[] | undefined }) {
-  try {
-    const category = typeof searchParams.categorie === 'string' ? searchParams.categorie : undefined
-    const search = typeof searchParams.zoek === 'string' ? searchParams.zoek : undefined
-    const minPrice = typeof searchParams.minPrijs === 'string' ? parseFloat(searchParams.minPrijs) : undefined
-    const maxPrice = typeof searchParams.maxPrijs === 'string' ? parseFloat(searchParams.maxPrijs) : undefined
-    const sortBy = typeof searchParams.sorteer === 'string' ? searchParams.sorteer : 'nieuwste'
+  const category = typeof searchParams.categorie === "string" ? searchParams.categorie : undefined
+  const search = typeof searchParams.zoek === "string" ? searchParams.zoek : undefined
+  const minPrice = typeof searchParams.minPrijs === "string" ? parseFloat(searchParams.minPrijs) : undefined
+  const maxPrice = typeof searchParams.maxPrijs === "string" ? parseFloat(searchParams.maxPrijs) : undefined
+  const sortBy = typeof searchParams.sorteer === "string" ? searchParams.sorteer : "nieuwste"
 
-    // Build where clause step by step
-    const whereConditions: any[] = [
-      { active: true }
-    ]
-
-    if (category) {
-      whereConditions.push({
-        category: {
-          slug: category,
-        }
-      })
-    }
-
-    if (minPrice !== undefined) {
-      whereConditions.push({
-        pricePerDay: { gte: minPrice }
-      })
-    }
-
-    if (maxPrice !== undefined) {
-      whereConditions.push({
-        pricePerDay: { lte: maxPrice }
-      })
-    }
-
-    if (search && search.trim()) {
-      const searchTerm = search.trim()
-      whereConditions.push({
-        OR: [
-          { name: { contains: searchTerm } },
-          { description: { contains: searchTerm } },
-        ]
-      })
-    }
-
-    // Combine all conditions with AND
-    const where = whereConditions.length === 1 
-      ? whereConditions[0]
-      : { AND: whereConditions }
-
-    const orderBy: any = {}
-    switch (sortBy) {
-      case 'prijs-laag':
-        orderBy.pricePerDay = 'asc'
-        break
-      case 'prijs-hoog':
-        orderBy.pricePerDay = 'desc'
-        break
-      case 'naam':
-        orderBy.name = 'asc'
-        break
-      default:
-        orderBy.createdAt = 'desc'
-    }
-
-    const products = await prisma.product.findMany({
-      where,
-      include: {
-        category: true,
-      },
-      orderBy,
-    })
-
-    const categories = await prisma.category.findMany({
-      orderBy: {
-        name: 'asc',
-      },
-    })
-
-    return { products, categories }
-  } catch (error) {
-    console.error('Database error:', error)
-    return { products: [], categories: [] }
-  }
+  return getAssortiment({
+    category,
+    search,
+    minPrice,
+    maxPrice,
+    sortBy,
+  })
 }
 
 export default async function AssortimentPage({

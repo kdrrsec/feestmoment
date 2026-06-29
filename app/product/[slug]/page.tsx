@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma"
+import { getProductBySlug } from "@/lib/catalog"
 import { notFound } from "next/navigation"
 
 /** Geen verouderde HTML-cache: wijzigingen uit het adminpanel moeten direct zichtbaar zijn. */
@@ -10,19 +10,7 @@ import { Metadata } from "next"
 import { absoluteUrl } from "@/lib/seo"
 
 async function getProduct(slug: string) {
-  try {
-    const product = await prisma.product.findUnique({
-      where: { slug, active: true },
-      include: {
-        category: true,
-      },
-    })
-
-    return product
-  } catch (error) {
-    console.error('Database error:', error)
-    return null
-  }
+  return getProductBySlug(slug)
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {

@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ProductCard } from "@/components/product-card"
-import { prisma } from "@/lib/prisma"
+import { getPopularProducts } from "@/lib/catalog"
 import { 
   Truck, 
   Wrench, 
@@ -24,23 +24,8 @@ export const metadata: Metadata = {
   },
 }
 
-async function getPopularProducts() {
-  try {
-    const products = await prisma.product.findMany({
-      where: { active: true },
-      include: { category: true },
-      take: 6,
-      orderBy: { createdAt: 'desc' },
-    })
-    return products
-  } catch (error) {
-    console.error('Database error:', error)
-    return []
-  }
-}
-
 export default async function Home() {
-  const popularProducts = await getPopularProducts()
+  const popularProducts = await getPopularProducts(6)
 
   return (
     <div className="flex flex-col bg-white">
