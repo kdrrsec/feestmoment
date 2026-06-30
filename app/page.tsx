@@ -47,7 +47,8 @@ export default async function Home() {
         <div className="container relative z-10 py-20 md:py-32">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 text-[#111111] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-700 motion-reduce:animate-none">
-              Uw perfecte feestmoment
+              Uw perfecte feest
+              <span className="text-[#C6A76B]">moment</span>
             </h1>
             <p className="text-xl md:text-2xl text-[#666666] mb-12 max-w-2xl mx-auto leading-relaxed motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-700 motion-safe:delay-200 motion-reduce:animate-none">
               Elegante feest- en eventartikelen voor uw bijzondere momenten. 
@@ -55,9 +56,9 @@ export default async function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-700 motion-safe:delay-500 motion-reduce:animate-none">
               <Link href="/assortiment">
-                <Button size="lg" className="text-lg px-8 py-6">
+                <Button size="lg" variant="gold" className="text-lg px-8 py-6">
                   Assortiment
-                  <ArrowRight className="ml-2 h-5 w-5 text-[#111111]" />
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link href="/offerte">
