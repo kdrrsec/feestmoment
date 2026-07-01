@@ -11,8 +11,11 @@
     --text-secondary: 102 102 102; /* #666666 - Secundaire tekst */
     --border: 229 229 229; /* #E5E5E5 - Borders */
     
-    /* Zeer subtiel goud accent (alleen voor hover/details) */
-    --accent-gold: 198 167 107; /* #C6A76B - Zeer subtiel goud */
+    /* Logo champagne goud (lichter/warmer dan #C6A76B) */
+    --accent-gold: 221 195 118; /* #DDC376 */
+    --brand-gold: #DDC376;
+    --brand-gold-dark: #C9A856;
+    --brand-gold-border: #BF9E4C;
     
     /* Shadcn/ui compatible tokens */
     --foreground: var(--text-primary);
@@ -276,6 +279,32 @@ a svg,
   color: #ffffff !important;
   stroke: #ffffff !important;
   fill: #ffffff !important;
+}
+
+/* Logo-goud: override global forced black text */
+.text-brand-gold,
+.text-brand-gold * {
+  color: var(--brand-gold) !important;
+}
+
+.btn-gold {
+  background-color: var(--brand-gold) !important;
+  border: 2px solid var(--brand-gold-border) !important;
+  color: #111111 !important;
+}
+
+.btn-gold:hover,
+.btn-gold:focus-visible {
+  background-color: var(--brand-gold-dark) !important;
+  border-color: var(--brand-gold-dark) !important;
+  color: #111111 !important;
+}
+
+.btn-gold svg,
+.btn-gold svg * {
+  color: #111111 !important;
+  stroke: #111111 !important;
+  fill: #111111 !important;
 }
 
 @keyframes heroFloat {

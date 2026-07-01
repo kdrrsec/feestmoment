@@ -48,7 +48,7 @@ export default async function Home() {
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 text-[#111111] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-700 motion-reduce:animate-none">
               Uw perfecte feest
-              <span className="text-[#C6A76B]">moment</span>
+              <span className="text-brand-gold">moment</span>
             </h1>
             <p className="text-xl md:text-2xl text-[#666666] mb-12 max-w-2xl mx-auto leading-relaxed motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-700 motion-safe:delay-200 motion-reduce:animate-none">
               Elegante feest- en eventartikelen voor uw bijzondere momenten. 
